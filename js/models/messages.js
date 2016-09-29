@@ -366,8 +366,10 @@
                             conversation.set({expireTimer: dataMessage.expireTimer});
                         } else if (dataMessage.expireTimer) {
                             message.set({expireTimer: dataMessage.expireTimer});
-                            // todo: insert an update if needed
-                            conversation.set({expireTimer: dataMessage.expireTimer});
+                        }
+                        if (dataMessage.expireTimer >= 0 &&
+                            dataMessage.expireTimer !== conversation.get('expireTimer')) {
+                            conversation.addExpirationTimerUpdate(dataMessage.expireTimer, source);
                         }
 
                         var conversation_timestamp = conversation.get('timestamp');
