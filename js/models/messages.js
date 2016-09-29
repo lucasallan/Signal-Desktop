@@ -367,9 +367,12 @@
                         } else if (dataMessage.expireTimer) {
                             message.set({expireTimer: dataMessage.expireTimer});
                         }
-                        if (dataMessage.expireTimer >= 0 &&
-                            dataMessage.expireTimer !== conversation.get('expireTimer')) {
-                            conversation.addExpirationTimerUpdate(dataMessage.expireTimer, source);
+                        if (dataMessage.expireTimer) {
+                            if (dataMessage.expireTimer !== conversation.get('expireTimer')) {
+                              conversation.addExpirationTimerUpdate(dataMessage.expireTimer, source);
+                            }
+                        } else if (conversation.get('expireTimer')) {
+                            conversation.addExpirationTimerUpdate(0, source);
                         }
 
                         var conversation_timestamp = conversation.get('timestamp');
