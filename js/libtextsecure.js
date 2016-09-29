@@ -38825,8 +38825,10 @@ function Message(options) {
         throw new Error('Invalid timestamp');
     }
 
-    if (typeof this.expireTimer !== 'number' || !(this.expireTimer >= 0)) {
-        throw new Error('Invalid expireTimer');
+    if (this.expireTimer !== undefined) {
+        if (typeof this.expireTimer !== 'number' || !(this.expireTimer >= 0)) {
+            throw new Error('Invalid expireTimer');
+        }
     }
 
     if (this.attachments) {
@@ -38867,7 +38869,9 @@ Message.prototype = {
             return this.dataMessage;
         }
         var proto         = new textsecure.protobuf.DataMessage();
-        proto.body        = this.body;
+        if (this.body) {
+          proto.body        = this.body;
+        }
         proto.attachments = this.attachmentPointers;
         if (this.flags) {
             proto.flags = this.flags;
