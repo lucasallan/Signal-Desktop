@@ -27,10 +27,16 @@
     Whisper.ExpirationTimerOptions = new (Backbone.Collection.extend({
       model: TimerOption,
       getName: function(seconds) {
+        if (!seconds) {
+          seconds = 0;
+        }
         var o = this.findWhere({seconds: seconds});
         if (o) { return o.getName(); }
       },
       getAbbreviated: function(seconds) {
+        if (!seconds) {
+          seconds = 0;
+        }
         var o = this.findWhere({seconds: seconds});
         if (o) { return o.getAbbreviated(); }
       }
